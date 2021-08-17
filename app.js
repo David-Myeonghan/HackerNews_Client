@@ -32,9 +32,7 @@ function newsFeed() {
 
 function newsDetail() {
 	const id = location.hash.substr(1);
-
 	const newsContent = getData(CONTENT_URL.replace('@id', id));
-	const title = document.createElement('h1');
 
 	container.innerHTML = `
         <h1>${newsContent.title}</h1>
@@ -45,4 +43,17 @@ function newsDetail() {
     `;
 }
 
-window.addEventListener('hashchange', newsDetail);
+function router() {
+	const routePath = location.hash;
+
+	// hash에 '#' 만 들어있으면 빈 값으로 인식.
+	if (routePath === '') {
+		newsFeed();
+	} else {
+		newsDetail();
+	}
+}
+
+window.addEventListener('hashchange', router);
+
+router();
